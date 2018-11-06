@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ListForElements</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var names = new Array();
+var lasts = new Array();
+var count = new Array();
+var i = count.length;
+  // Add products to <table>
+  function productsAdd() {
+	  var name = document.getElementById("Name").value;
+	  var last = document.getElementById("Last").value;
+	  names.push(name);
+	  lasts.push(last);
+	  
+	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+		  count.push(i);
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ names[i] + "</td>" +
+			"<td>"+ lasts[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" + 
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  document.getElementById("count").innerHTML = count[i];
+  }
+  function productDelete(ctl,id) {
+	  if(id + 1 == count.length){
+      $(ctl).parents("tr").remove();
+	  alert(id);
+	  count.splice(id);
+	  names.splice(id);
+	  lasts.splice(id);
+	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ names[i] + "</td>" +
+			"<td>"+ lasts[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" + 
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  }else{
+		  var repcount = new Array();
+		  var repnames = new Array();
+		  var replasts = new Array();
+		  for(i = 0; i < count.length; i++)
+		  {
+			  if(count[i] != count[id]){
+			  	repcount.push(i);
+				repnames.push(names[i]);
+				replasts.push(lasts[i]);
+			  }
+		  }
+		  count = null;
+		  names = null;
+		  lasts = null;
+		  count = repcount;
+		  names = repnames;
+		  lasts = replasts;
+		  	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ names[i] + "</td>" +
+			"<td>"+ lasts[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" + 
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  alert(repcount);
+	  }
+      document.getElementById("count").innerHTML = count[i];
+  }
+  function showItems(){
+  	 alert("Lista de Nombres: " + count);
+  }
+</script>
+
+</head>
+<body>
+<input type="text" id="Name" />
+<input type="text" id="Last" />
+<button onclick="productsAdd()">Add</button>
+Population: <span id="count"></span>
+<table id="productTable" border="1">
+  <thead>
+    <tr>
+      <th>Count</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<button type="button" onclick="showItems()">Show Items</button>
+</body>
+</html>

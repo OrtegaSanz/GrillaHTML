@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ListForElements</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var codigos = new Array();
+var descripcions = new Array();
+var cantidads = new Array();
+var preUs = new Array();
+var subTs = new Array();
+var count = new Array();
+var i = count.length;
+  // Add products to <table>
+  function productsAdd() {
+	  var codigo = document.getElementById("CODIGO2").value;
+	  var descripcion = document.getElementById("Descripcion").value;
+	  var cantidad = document.getElementById("Cantidad").value;
+	  var preU = document.getElementById("preU").value;
+	  var subT = (preU * cantidad)/1.0;
+	  codigos.push(codigo);
+	  descripcions.push(descripcion);
+	  cantidads.push(cantidad);
+	  preUs.push(preU);
+	  subTs.push(subT);
+	  count.push(i);
+	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ codigos[i] + "</td>" +
+			"<td>"+ descripcions[i] + "</td>" +
+			"<td>"+ cantidads[i] + "</td>" +
+			"<td>"+ preUs[i] + "</td>" +
+			"<td>"+ subTs[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" +
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  document.getElementById("count").innerHTML = count[i];
+  }
+  function productDelete(ctl,id) {
+	  if(id + 1 == count.length){
+      $(ctl).parents("tr").remove();
+	  alert(id);
+	  count.splice(id);
+	  names.splice(id);
+	  lasts.splice(id);
+	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ codigos[i] + "</td>" +
+			"<td>"+ descripcions[i] + "</td>" +
+			"<td>"+ cantidads[i] + "</td>" +
+			"<td>"+ preUs[i] + "</td>" +
+			"<td>"+ subTs[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" + 
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  }else{
+		  var repcodigos = new Array();
+		  var repdescripcions = new Array();
+		  var repcantidads = new Array();
+		  var reppreUs = new Array();
+		  var repsubTs = new Array();
+		  var repcount = new Array();
+		  for(i = 0; i < count.length; i++)
+		  {
+			  if(count[i] != count[id]){
+			  	repcount.push(i);
+				repcodigos.push(codigos[i]);
+				repdescripcions.push(descripcions[i]);
+				repcantidads.push(cantidads[i]);
+				reppreUs.push(preUs[i]);
+				repsubTs.push(subTs[i]);
+			  }
+		  }
+		  count = null;
+		  codigos = null;
+		  descripcions = null;
+		  cantidads = null;
+		  preUs = null;
+		  subTs = null;
+		  count = repcount;
+		  codigos = repcodigos;
+		  descripcions = repdescripcions;
+		  cantidads = repcantidads;
+		  preUs = reppreUs;
+		  subTs = repsubTs;
+		  	  $("#productTable tbody").remove();
+	  if ($("#productTable tbody").length == 0) {
+      $("#productTable").append("<tbody></tbody>");
+      }
+      for(i = 0; i < count.length; i++){
+    // Append product to the table
+    $("#productTable tbody").append(
+		"<tr>" + 
+			"<td>" + i + "</td>" +
+			"<td>"+ codigos[i] + "</td>" +
+			"<td>"+ descripcions[i] + "</td>" +
+			"<td>"+ cantidads[i] + "</td>" +
+			"<td>"+ preUs[i] + "</td>" +
+			"<td>"+ subTs[i] + "</td>" +
+			"<td>"+ "<button type='button' " + "onclick='productDelete(this," + i + ")' " + "class='btn btn-default'>" + "Delete"+ "</button>" + 
+			"</td>" +
+		"</tr>"
+      );
+	  }
+	  alert(repcount);
+	  }
+      document.getElementById("count").innerHTML = count[i];
+  }
+  function showItems(){
+  	 alert("Lista de Nombres: " + count);
+  }
+</script>
+
+</head>
+<body>
+codigo:<input type="text" id="CODIGO2" />
+descripcion:<input type="text" id="Descripcion" />
+cantidad:<input type="text" id="Cantidad" />
+precio unitario:<input type="text" id="preU" />
+<button onclick="productsAdd()">Add</button>
+Population: <span id="count"></span>
+<table id="productTable" border="1">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Codigo</th>
+      <th>Descripcion</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>SubTotal</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<button type="button" onclick="showItems()">Show Items</button>
+</body>
+</html>
